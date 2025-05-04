@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center align-items-center vh">
+  <div class="container bg-dark text-white card p-3 w-50">
+    <form [formGroup]="formGroupTodo" class="p-2">
+      <div class="mb-3">
+        <div class="d-flex gap-5 justify-content-center">
+          <div class="col">
+            <label for="InputTitle" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="InputTitle"
+              formControlName="title"
+            />
+          </div>
+          <div class="col-3">
+            <label for="InputCreatedDate" class="form-label"
+              >Created Date</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="InputCreatedDate"
+              formControlName="createdAt"
+              readonly
+            />
+          </div>
+          <div class="col-3">
+            <label for="InputDueDate" class="form-label">Due Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="InputDueDate"
+              formControlName="dueDate"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="descriptionTextArea" class="form-label">Description</label>
+        <textarea
+          class="form-control"
+          id="descriptionTextArea"
+          formControlName="description"
+          rows="3"
+        ></textarea>
+      </div>
+      <div class="mb-2">
+        <button type="button" class="btn btn-primary me-3" (click)="saveTodo()">
+          Salvar
+        </button>
+        <a routerLink="/todos" class="btn btn-danger">Cancelar</a>
+      </div>
+    </form>
+    <div *ngIf="submitted && !formGroupTodo.valid" class="alert alert-danger m-2" role="alert">
+      <ng-container *ngIf="formGroupTodo.get('dueDate')?.errors?.['notFuture']">
+        The due date must be less than today's date
+        {{formGroupTodo.get('title')?.invalid ? "and" : ""}}
+      </ng-container>
+      <ng-container *ngIf="formGroupTodo.get('title')?.invalid">
+        Fill in the title field
+      </ng-container>
+    </div>
+  </div>
+</div>
